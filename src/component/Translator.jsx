@@ -50,6 +50,19 @@ function Translator() {
         }
     }
 
+    async function handleTranslate(){
+        let url = `https://api.mymemory.translated.net/get?q=${fromText}&langpair=${fromLanguage}|${toLanguage}`;
+        try {
+            console.log("API URL:", url,fromText);
+            let response = await fetch(url);
+            let data = await response.json();
+            setToText(data.responseData.translatedText);
+        } catch (error) {
+            console.error("Error fetching or processing data:", error);
+        }
+        
+    }
+
     return (
         <><div className="main w-[100vw] h-[100vh] bg-purple-500 flex flex-col justify-center items-center gap-[0.5rem]">
 
@@ -94,7 +107,7 @@ function Translator() {
                 </ul>
             </div>
 
-            <button className="border bg-blue-500 w-[45%] py-[8px] border-none rounded-md text-[18px] font-bold font">Translate</button>
+            <button onClick={handleTranslate} className="border bg-blue-500 w-[45%] py-[8px] border-none rounded-md text-[18px] font-bold font">Translate</button>
 
         </div>
         </>
